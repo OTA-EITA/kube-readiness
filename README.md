@@ -1,6 +1,7 @@
 # kube-readiness
 
 [![ci](https://github.com/OTA-EITA/kube-readiness/actions/workflows/ci.yml/badge.svg)](https://github.com/OTA-EITA/kube-readiness/actions/workflows/ci.yml)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/OTA-EITA/kube-readiness/badge)](https://securityscorecards.dev/viewer/?uri=github.com/OTA-EITA/kube-readiness)
 
 Kubernetes のワークロードを**本番運用のベストプラクティス**（信頼性・効率・セキュリティ）で採点する CLI です。
 マニフェスト（ファイル、ディレクトリ、`helm template` の出力）と、稼働中のクラスタの両方に使えます。
