@@ -1,0 +1,29 @@
+version: "2"
+
+linters:
+  enable:
+    - errcheck
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - gosec
+    - misspell
+    - revive
+  settings:
+    revive:
+      rules:
+        # Interface methods (Name, Description, Run) are documented on Checker.
+        - name: exported
+          disabled: true
+    errcheck:
+      # Writing a report to stdout is best effort; a failed write has nowhere to be reported.
+      exclude-functions:
+        - fmt.Fprint
+        - fmt.Fprintf
+        - fmt.Fprintln
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
