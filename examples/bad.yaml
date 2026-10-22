@@ -1,0 +1,88 @@
+# Typical problems: no probes or resources, latest tag, single replica,
+# a budget that blocks drains, and a privileged pod on the host network.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: readiness-bad
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+  namespace: readiness-bad
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: api
+          image: registry.k8s.io/pause:latest
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: api
+  namespace: readiness-bad
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: api
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-agent
+  namespace: readiness-bad
+spec:
+  selector:
+    matchLabels:
+      app: node-agent
+  template:
+    metadata:
+      labels:
+        app: node-agent
+    spec:
+      hostNetwork: true
+      containers:
+        - name: agent
+          image: registry.k8s.io/pause:3.10
+          securityContext:
+            privileged: true
+            capabilities:
+              add: ["NET_ADMIN"]
+          volumeMounts:
+            - name: root
+              mountPath: /host
+      volumes:
+        - name: root
+          hostPath:
+            path: /
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: cache
+  namespace: readiness-bad
+  annotations:
+    kube-readiness/ignore: SEC-005
+spec:
+  serviceName: cache
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cache
+  template:
+    metadata:
+      labels:
+        app: cache
+    spec:
+      containers:
+        - name: cache
+          image: registry.k8s.io/pause
