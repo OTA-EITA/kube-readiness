@@ -1,13 +1,13 @@
 module github.com/OTA-EITA/kube-readiness
 
-go 1.25.4
+go 1.26
 
 require (
 	gopkg.in/yaml.v3 v3.0.1
 	k8s.io/api v0.34.1
 	k8s.io/apimachinery v0.34.1
 	k8s.io/client-go v0.34.1
-	k8s.io/utils v0.0.0-20250604170112-4c0f3b243397
+	k8s.io/utils v0.0.0-20261023123148-ca04ba58ecab
 )
 
 require (
