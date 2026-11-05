@@ -1,5 +1,17 @@
 # kube-readiness
 
+> [!IMPORTANT]
+> **このリポジトリは [kube-postcheck](https://github.com/OTA-EITA/kube-postcheck) に統合しました。** 今後の更新はそちらで行います。
+> ワークロードの採点は `kube-postcheck score` サブコマンドになりました。チェックの ID（REL-001 など）、`--config` の形式、`kube-readiness/ignore` アノテーション、フラグはそのまま使えます（新しいアノテーション名は `kube-postcheck/ignore`）。
+>
+> This project has moved to [kube-postcheck](https://github.com/OTA-EITA/kube-postcheck): run `kube-postcheck score` instead of `kube-readiness`, with the same checks, flags and config.
+
+```sh
+go install github.com/OTA-EITA/kube-postcheck/cmd/kube-postcheck@latest
+kube-postcheck score --min-score 80 --fail-on-danger k8s/
+kube-postcheck score --cluster --context prod
+```
+
 [![ci](https://github.com/OTA-EITA/kube-readiness/actions/workflows/ci.yml/badge.svg)](https://github.com/OTA-EITA/kube-readiness/actions/workflows/ci.yml)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/OTA-EITA/kube-readiness/badge)](https://securityscorecards.dev/viewer/?uri=github.com/OTA-EITA/kube-readiness)
 
